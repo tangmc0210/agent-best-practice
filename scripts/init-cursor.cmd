@@ -6,7 +6,8 @@ REM   Default source "user_rules" = folder next to this script (so it works from
 
 set "SCRIPT_DIR=%~dp0"
 if "%SCRIPT_DIR:~-1%"=="\" set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
-set "DEFAULT_SOURCE=%SCRIPT_DIR%\user_rules"
+REM user_rules is sibling of scripts folder (agent_rules\user_rules)
+set "DEFAULT_SOURCE=%SCRIPT_DIR%..\user_rules"
 set "DEFAULT_TARGET=."
 set "TARGET=%DEFAULT_TARGET%"
 set "SOURCE=%DEFAULT_SOURCE%"
@@ -28,7 +29,7 @@ shift & goto :parse
 if defined POS1 set "TARGET=!POS1!"
 if defined POS2 set "SOURCE=!POS2!"
 REM If user passed literal "user_rules", resolve to script's user_rules folder
-if "!SOURCE!"=="user_rules" set "SOURCE=%SCRIPT_DIR%\user_rules"
+if "!SOURCE!"=="user_rules" set "SOURCE=%SCRIPT_DIR%..\user_rules"
 
 :run
 REM Resolve absolute paths (pushd sets CD to the path)
