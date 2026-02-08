@@ -1,19 +1,19 @@
 # Scripts
 
-## init_cursor — link rules into a project’s `.cursor/rules`
+## init-cursor — link rules into a project’s `.cursor/rules`
 
 - **Linux/macOS:** `init_cursor.sh` or `init-cursor`
-- **Windows:** `init_cursor.ps1` or `init-cursor.cmd`
+- **Windows:** `init-cursor.cmd` (pure CMD, no PowerShell)
 
-**Target** is the **project root**. Links are always created under `TARGET/.cursor/rules`.  
+**Target** is the **project root**. Links are always created under `TARGET\.cursor\rules`.  
 **Source** is a file or directory (default: `user_rules`). Symbolic links are used when possible; hard links are used as fallback (e.g. Windows without symlink support).
 
 ### Help
 
 - Bash: `./init_cursor.sh --help` or `-h`
-- PowerShell: `Get-Help .\init_cursor.ps1 -Full` or `.\init_cursor.ps1 -Help`
+- Windows: `init-cursor /?` or `init-cursor --help`
 
-### Run `init-cursor` from the project folder
+### Run from the project folder
 
 1. **Add the `scripts` directory to your PATH.**
 
@@ -28,8 +28,8 @@
 
 2. **In the project directory, run:**
 
-   - **Windows:** `init-cursor` or `init-cursor.cmd`
+   - **Windows:** `init-cursor` (or `init-cursor.cmd`)
    - **Linux/macOS:** `init-cursor` or `init_cursor.sh`  
      (Make `init-cursor` executable once: `chmod +x /path/to/agent_rules/scripts/init-cursor`)
 
-With no arguments, the script uses the **current directory** as the project (target) and `user_rules` as the source, so links are created in `./.cursor/rules`.
+With no arguments, the script uses the **current directory** as the project (target) and `user_rules` as the source, so links are created in `.\.cursor\rules`.
