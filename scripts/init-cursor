@@ -1,0 +1,6 @@
+#!/bin/bash
+# Wrapper so you can run "init-cursor" from any project directory (with scripts on PATH).
+# Runs init_cursor.sh in the same directory; pass through all arguments.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec "$SCRIPT_DIR/init_cursor.sh" "$@"
