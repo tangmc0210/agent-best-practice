@@ -2,11 +2,11 @@
 setlocal enabledelayedexpansion
 REM Link source (file or dir) into project .cursor/rules. Prefer symlink, fallback to hard link.
 REM Usage: init-cursor [target] [source]   or   init-cursor --target path --source path
-REM   No args: target=current dir, source=user_rules
-REM   One arg: target=arg, source=user_rules
-REM   Two args: target=arg1, source=arg2
+REM   Default source "user_rules" = folder next to this script (so it works from any project).
 
-set "DEFAULT_SOURCE=user_rules"
+set "SCRIPT_DIR=%~dp0"
+if "%SCRIPT_DIR:~-1%"=="\" set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
+set "DEFAULT_SOURCE=%SCRIPT_DIR%\user_rules"
 set "DEFAULT_TARGET=."
 set "TARGET=%DEFAULT_TARGET%"
 set "SOURCE=%DEFAULT_SOURCE%"
@@ -27,6 +27,8 @@ shift & goto :parse
 :parsed
 if defined POS1 set "TARGET=!POS1!"
 if defined POS2 set "SOURCE=!POS2!"
+REM If user passed literal "user_rules", resolve to script's user_rules folder
+if "!SOURCE!"=="user_rules" set "SOURCE=%SCRIPT_DIR%\user_rules"
 
 :run
 REM Resolve absolute paths (pushd sets CD to the path)
@@ -88,9 +90,9 @@ echo init-cursor - link rules into project .cursor/rules
 echo.
 echo Usage: init-cursor [TARGET] [SOURCE]
 echo   TARGET  Project root. Links go to TARGET\.cursor\rules. Default: .
-echo   SOURCE  File or directory to link from. Default: user_rules
+echo   SOURCE  File or directory to link from. Default: user_rules (next to this script)
 echo.
-echo   No args    = target . , source user_rules
+echo   No args    = target . , source = script dir\user_rules
 echo   One arg    = target ^<%arg^>, source user_rules
 echo   Two args   = target ^<%1st^>, source ^<%2nd^>
 echo   Options    = --target path --source path
